@@ -355,7 +355,8 @@ const InterestLoan = () => {
 
                                                         <div className="pointer-events-none absolute inset-0 flex items-center justify-center ">
                                                             <span>$</span>
-                                                            <span>{assumptions.employmentIncome.toFixed(2) || "0.00"}</span>
+                                                            {/* <span>{assumptions.employmentIncome.toFixed(2) || Number(formData.income)}</span> */}
+                                                            <span>{`${formData.income ? formData.income : assumptions.employmentIncome}`}</span>
                                                             
                                                         </div>
 

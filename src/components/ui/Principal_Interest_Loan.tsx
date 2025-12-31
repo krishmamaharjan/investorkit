@@ -306,13 +306,25 @@ const PrincipalInterestLoan = () => {
                                                         onChange={(e) => handleChange("inflationRate", e.target.value)}
                                                         placeholder="Inflation"
                                                     />
-                                                    <input
-                                                        type="number"
-                                                        className='w-16 border border-blue-300 py-1 rounded-lg text-center'
-                                                        value={`$${assumptions.employmentIncome}`}
-                                                        onChange={(e) => handleChange("employmentIncome", e.target.value)}
-                                                        placeholder="Employment income"
-                                                    />
+                                                    <div className="relative w-24">
+
+                                                        <div className="pointer-events-none absolute inset-0 flex items-center justify-center ">
+                                                            <span>$</span>
+                                                            {/* <span>{assumptions.employmentIncome.toFixed(2) || Number(formData.income)}</span> */}
+                                                            <span>{`${formData.income ? formData.income : assumptions.employmentIncome}`}</span>
+
+                                                        </div>
+
+                                                        <input
+                                                            type="number"
+                                                            className="w-full border border-blue-300 py-1 rounded-lg text-center bg-transparent text-transparent  focus:outline-none"
+                                                            value={`$${formData.income ? formData.income : assumptions.employmentIncome}`}
+                                                            onChange={(e) =>
+                                                                handleChange("employmentIncome", e.target.value)
+                                                            }
+                                                            placeholder="0.00"
+                                                        />
+                                                    </div>
                                                 </div>
                                             )}
 
