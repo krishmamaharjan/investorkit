@@ -70,6 +70,8 @@ export const InvestorProvider = ({ children }: { children: ReactNode }) => {
         income: "",
         taxIncome: "",
 
+        
+
         loanAmount: "480000",
         interestRate: "6.25",
         loanTerm: "30",

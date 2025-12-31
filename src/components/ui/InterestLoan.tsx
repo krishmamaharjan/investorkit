@@ -86,7 +86,7 @@ const InterestLoan = () => {
 
     // const beforeTax: number[] = [];
     // const afterTax: number[] = [];
-    
+
 
     // years.forEach((year) => {
     //     const capitalGrowthRate = assumptions.capitalGrowthRate / 100;
@@ -136,7 +136,7 @@ const InterestLoan = () => {
         const propertyValue =
             Number(formData.propertyValue) *
             Math.pow(1 + capitalGrowthRate, year);
-        
+
         const loanAmount = Number(formData.loanAmount);
         const equity = propertyValue - loanAmount;
 
@@ -147,7 +147,7 @@ const InterestLoan = () => {
         const interestCharged =
             effectiveLoan * Number(formData.interestRate) / 100;
 
-        const interest =
+        const interestYear =
             (Number(formData.loanAmount) - assumptions.offsetAmount) *
             Number(formData.interestRate) /
             100;
@@ -158,12 +158,12 @@ const InterestLoan = () => {
         const expenses =
             annualHoldingCostValue * Math.pow(1 + inflationRate, year - 1);
 
-        const cashflow = grossRent - interest - expenses;
+        const cashflow = grossRent - interestYear - expenses;
 
         const beforeTaxYear =
             grossRent - rentalExpensesYear - interestCharged;
 
-        
+
         interestArr.push(interestCharged);
 
         totalPerformance.push(equity + beforeTaxYear);
@@ -209,7 +209,7 @@ const InterestLoan = () => {
                                     {/* Acquisition cost */}
                                     {cat.title === "Acquisition Costs" && (
                                         <div>
-                                            ${totalAcquisition}
+                                            ${totalAcquisition.toLocaleString()}
                                         </div>
                                     )}
 
@@ -263,11 +263,29 @@ const InterestLoan = () => {
                                     const BeforeTaxCashFlowYear = grossRentYear - rentalExpensesYear - interestedCharge;
                                     const BeforeTaxCashFlowWeek = BeforeTaxCashFlowYear / 52;
 
-                                    const AfterTaxCashFlowYear = BeforeTaxCashFlowYear;
-                                    const AfterTaxCashFlowWeek = BeforeTaxCashFlowWeek;
+                                    const marginalTaxRate = 0.3;
+                                    const taxableIncome = BeforeTaxCashFlowYear - assumptions.depreciation;
+                                    const tax = taxableIncome > 0 ? taxableIncome * marginalTaxRate : 0;
 
-                                    const initialEquity = depositValue + totalAcquisition;
-                                    const estimateEquity = equity - initialEquity;
+                                    const AfterTaxCashFlowYear = BeforeTaxCashFlowYear - tax;
+                                    const AfterTaxCashFlowWeek = AfterTaxCashFlowYear / 52;
+
+                                    // const initialEquity = depositValue + totalAcquisition;
+                                    // const acquisitionCostsOnly =
+                                    //     stampDutyValue +
+                                    //     Number(formData.inspection) +
+                                    //     Number(formData.conveyancingFees) +
+                                    //     Number(formData.transferFees) +
+                                    //     Number(formData.miscellaneousCosts);
+                                    // const initialCashInvested = depositValue + acquisitionCostsOnly
+
+                                    const purchasePrice = Number(formData.propertyValue);
+
+                                    const previousYearValue =
+                                        purchasePrice * Math.pow(1 + capitalGrowthRate, year - 1);
+
+                                    const estimateEquity =
+                                        propertyValueYear - previousYearValue;
 
 
                                     // const equityYear =  Number(formData.propertyValue) - Number(formData.loanAmount)
@@ -277,41 +295,99 @@ const InterestLoan = () => {
 
                                             {cat.title === "Key assumptions" && (
                                                 <div className='flex flex-col gap-1 items-center justify-center '>
-                                                    <input
-                                                        type="number"
-                                                        className='w-24 border border-blue-300 rounded-lg py-1 text-center'
-                                                        value={assumptions.capitalGrowthRate}
-                                                        onChange={(e) => handleChange("capitalGrowthRate", e.target.value)}
-                                                        placeholder="Cap Growth"
-                                                    />
-                                                    <input
-                                                        type="number"
-                                                        className='w-24 border border-blue-300 py-1 rounded-lg text-center'
-                                                        value={assumptions.rentalGrowthRate}
-                                                        onChange={(e) => handleChange("rentalGrowthRate", e.target.value)}
-                                                        placeholder="Rental Growth"
-                                                    />
-                                                    <input
-                                                        type="number"
-                                                        className='w-24 border border-blue-300 py-1 rounded-lg text-center'
-                                                        value={assumptions.inflationRate}
-                                                        onChange={(e) => handleChange("inflationRate", e.target.value)}
-                                                        placeholder="Inflation"
-                                                    />
-                                                    <input
+
+                                                    <div className="relative w-24">
+
+                                                        <div className="pointer-events-none absolute inset-0 flex items-center justify-center ">
+
+                                                            <span>{assumptions.capitalGrowthRate || "0.00"}</span>
+                                                            <span>%</span>
+                                                        </div>
+                                                        <input
+                                                            type="number"
+                                                            className="w-full border border-blue-300 py-1 rounded-lg text-center bg-transparent text-transparent  focus:outline-none"
+
+                                                            value={assumptions.capitalGrowthRate}
+                                                            onChange={(e) => handleChange("capitalGrowthRate", e.target.value)}
+                                                            placeholder="Cap Growth"
+                                                        />
+                                                    </div>
+
+                                                    <div className="relative w-24">
+
+                                                        <div className="pointer-events-none absolute inset-0 flex items-center justify-center ">
+
+                                                            <span>{assumptions.rentalGrowthRate || "0.00"}</span>
+                                                            <span>%</span>
+                                                        </div>
+                                                        <input
+                                                            type="number"
+                                                            className="w-full border border-blue-300 py-1 rounded-lg text-center bg-transparent text-transparent  focus:outline-none"
+
+                                                            value={assumptions.rentalGrowthRate}
+                                                            onChange={(e) => handleChange("rentalGrowthRate", e.target.value)}
+                                                            placeholder="Rental Growth"
+                                                        />
+                                                    </div>
+
+
+                                                    <div className="relative w-24">
+
+                                                        <div className="pointer-events-none absolute inset-0 flex items-center justify-center ">
+
+                                                            <span>{assumptions.inflationRate || "0.00"}</span>
+                                                            <span>%</span>
+                                                        </div>
+
+                                                        <input
+                                                            type="number"
+                                                            className="w-full border border-blue-300 py-1 rounded-lg text-center bg-transparent text-transparent  focus:outline-none"
+                                                            value={assumptions.inflationRate}
+                                                            onChange={(e) =>
+                                                                handleChange("inflationRate", e.target.value)
+                                                            }
+                                                            placeholder="0.00"
+                                                        />
+                                                    </div>
+
+
+                                                    <div className="relative w-24">
+
+                                                        <div className="pointer-events-none absolute inset-0 flex items-center justify-center ">
+                                                            <span>$</span>
+                                                            <span>{assumptions.employmentIncome.toFixed(2) || "0.00"}</span>
+                                                            
+                                                        </div>
+
+                                                        <input
+                                                            type="number"
+                                                            className="w-full border border-blue-300 py-1 rounded-lg text-center bg-transparent text-transparent  focus:outline-none"
+                                                            value={`$${formData.income ? formData.income : assumptions.employmentIncome}`}
+                                                            onChange={(e) =>
+                                                                handleChange("employmentIncome", e.target.value)
+                                                            }
+                                                            placeholder="0.00"
+                                                        />
+                                                    </div>
+
+
+                                                    {/* <input
                                                         type="number"
                                                         className='w-16 border border-blue-300 py-1 rounded-lg text-center'
-                                                        value={`${assumptions.employmentIncome}`}
-                                                        onChange={(e) => handleChange("employmentIncome", e.target.value)}
+                                                        value={`$${formData.income ? formData.income : assumptions.employmentIncome}`}
+                                                        onChange={(e) => {
+                                                            const numericValue = Number(e.target.value.replace(/[^0-9.]/g, "")) || 0;
+                                                            handleChange("employmentIncome", numericValue.toString());
+                                                        }}
                                                         placeholder="Employment income"
-                                                    />
+                                                    /> */}
                                                 </div>
                                             )}
 
                                             {cat.title === "Capital Growth" && (
                                                 <div className='space-y-2'>
                                                     <p>${propertyValueYear.toLocaleString()}</p>
-                                                    <p>{loanAmount.toLocaleString()}</p>
+                                                    <p>${loanAmount.toLocaleString()}</p>
                                                     <p>${equity.toLocaleString()}</p>
                                                 </div>
                                             )}
@@ -360,9 +436,9 @@ const InterestLoan = () => {
                                                         <input
                                                             type="text"
                                                             className='w-24 border border-blue-300 rounded-lg py-1 text-center'
-                                                            value={`$${assumptions.depreciation}`}
+                                                            value={`${assumptions.depreciation}`}
                                                             onChange={(e) => handleChange("depreciation", e.target.value)}
-                                                            placeholder="OA"
+                                                            placeholder="Depreciation"
                                                         />
                                                     </div>
 

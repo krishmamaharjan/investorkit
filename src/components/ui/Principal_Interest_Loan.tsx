@@ -264,12 +264,20 @@ const PrincipalInterestLoan = () => {
                                     const BeforeTaxCashFlowYear = grossRentYear - rentalExpensesYear - loanYear.interestYear;
                                     const BeforeTaxCashFlowWeek = BeforeTaxCashFlowYear / 52;
 
-                                    const AfterTaxCashFlowYear = BeforeTaxCashFlowYear;
-                                    const AfterTaxCashFlowWeek = BeforeTaxCashFlowWeek;
+                                    const marginalTaxRate = 0.3;
+                                    const taxableIncome = BeforeTaxCashFlowYear - assumptions.depreciation;
+                                    const tax = taxableIncome > 0 ? taxableIncome * marginalTaxRate : 0;
 
+                                    const AfterTaxCashFlowYear = BeforeTaxCashFlowYear - tax;
+                                    const AfterTaxCashFlowWeek = AfterTaxCashFlowYear / 52;
 
-                                    const initialEquity = depositValue + totalAcquisition;
-                                    const estimateEquity = equity - initialEquity;
+                                    const purchasePrice = Number(formData.propertyValue);
+
+                                    const previousYearValue =
+                                        purchasePrice * Math.pow(1 + capitalGrowthRate, year - 1);
+
+                                    const estimateEquity =
+                                        propertyValueYear - previousYearValue;
 
 
                                     return (
