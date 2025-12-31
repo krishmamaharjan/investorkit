@@ -3,9 +3,11 @@ import Investor from "../components/homepage/investor";
 
 export default function Home() {
   return (
-    <main className="">
-      <Investor />
-    </main>
+
+    <h1>hello world</h1>
+    // <main className="">
+    //   <Investor />
+    // </main>
 
   );
 }
