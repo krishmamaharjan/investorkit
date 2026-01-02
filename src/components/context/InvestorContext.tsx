@@ -74,7 +74,7 @@ export const InvestorProvider = ({ children }: { children: ReactNode }) => {
 
         loanAmount: "480000",
         interestRate: "6.25",
-        loanTerm: "10",
+        loanTerm: "30",
 
         loanType: 'IO' as 'IO' | 'PI',
 

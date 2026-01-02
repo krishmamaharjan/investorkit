@@ -94,6 +94,7 @@ export default function PrincipalLineChart({
                 plugins: {
                     legend: {
                         position: "top",
+                        display: false,
                     },
                     tooltip: {
                         backgroundColor: "rgba(0,0,0,0.85)",
@@ -136,109 +137,3 @@ export default function PrincipalLineChart({
 }
 
 
-
-
-// "use client"; // if using Next.js 13+ with app directory
-
-// import React, { JSX, useEffect, useRef } from "react";
-// import { Chart, registerables, type ChartConfiguration } from "chart.js";
-
-// Chart.register(...registerables);
-
-// // Utility functions for random data (similar to Utils from Chart.js sample)
-// const Utils = {
-//     CHART_COLORS: {
-//         red: "rgb(255, 99, 132)",
-//         blue: "rgb(54, 162, 235)",
-//         green: "rgb(75, 192, 192)",
-//     },
-//     numbers: ({ count, min, max }: { count: number; min: number; max: number }): number[] =>
-//         Array.from({ length: count }, () =>
-//             Math.floor(Math.random() * (max - min + 1)) + min
-//         ),
-//     months: ({ count }: { count: number }): string[] => {
-//         const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-//         return monthNames.slice(0, count);
-//     },
-// };
-
-// export default function LineChart(): JSX.Element {
-//     const chartRef = useRef<HTMLCanvasElement | null>(null);
-
-//     useEffect(() => {
-//         const DATA_COUNT = 7;
-//         const NUMBER_CFG: { count: number; min: number; max: number } = { count: DATA_COUNT, min: -100, max: 100 };
-//         const labels = Utils.months({ count: DATA_COUNT });
-//         const data = {
-//             labels,
-//             datasets: [
-//                 {
-//                     label: "Unfilled",
-//                     fill: false,
-//                     backgroundColor: Utils.CHART_COLORS.blue,
-//                     borderColor: Utils.CHART_COLORS.blue,
-//                     data: Utils.numbers(NUMBER_CFG),
-//                 },
-//                 {
-//                     label: "Dashed",
-//                     fill: false,
-//                     backgroundColor: Utils.CHART_COLORS.green,
-//                     borderColor: Utils.CHART_COLORS.green,
-//                     borderDash: [5, 5],
-//                     data: Utils.numbers(NUMBER_CFG),
-//                 },
-//                 {
-//                     label: "Filled",
-//                     backgroundColor: Utils.CHART_COLORS.red,
-//                     borderColor: Utils.CHART_COLORS.red,
-//                     data: Utils.numbers(NUMBER_CFG),
-//                     fill: true,
-//                 },
-//             ],
-//         };
-
-//         if (!chartRef.current) return;
-
-//         const config = {
-//             type: "line",
-//             data: data,
-//             options: {
-//                 responsive: true,
-//                 plugins: {
-//                     title: {
-//                         display: true,
-//                         text: "Chart.js Line Chart",
-//                     },
-//                 },
-//                 interaction: {
-//                     mode: "index",
-//                     intersect: false,
-//                 },
-//                 scales: {
-//                     x: {
-//                         display: true,
-//                         title: {
-//                             display: true,
-//                             text: "Month",
-//                         },
-//                     },
-//                     y: {
-//                         display: true,
-//                         title: {
-//                             display: true,
-//                             text: "Value",
-//                         },
-//                     },
-//                 },
-//             },
-//         } as ChartConfiguration;
-
-//         const myChart = new Chart(chartRef.current, config);
-
-//         return () => {
-//             myChart.destroy();
-//         };
-//     }, []);
-
-//     return <canvas ref={chartRef} />;
-// }

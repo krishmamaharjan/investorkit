@@ -69,7 +69,6 @@ const Leftbar = () => {
         }
     };
 
-
     return (
         <div className='w-full h-full md:h-500 pb-4 md:pb-0'>
             <div className='py-6 px-6 bg-primary text-white md:sticky md:left-0 md:top-0 z-100'>

@@ -178,13 +178,13 @@ const PrincipalInterestLoan = () => {
                 {/* <h1 className='py-8'>Principal and Interest only Loan</h1> */}
                 <div className="overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                     <table className='border mt-4 min-w-full'>
-                        <thead className='border'>
+                        <thead className='border relative bg-secondary text-white'>
                             <tr>
-                                <th className='sticky left-0 z-30 bg-white w-64 p-4 ml-1 text-left'>Year</th>
-                                <th className='w-44 p-2 text-left'>Present</th>
+                                <th className='sticky left-0 z-30 bg-secondary w-64 p-4 ml-1 text-left'>Year</th>
+                                <th className='w-44 p-2 text-left bg-secondary'>Present</th>
                                 {
                                     Array.from({ length: loanYears }, (_, i) => (
-                                        <th key={i} className='p-2 min-w-20 text-center'>{i + 1}</th>
+                                        <th key={i} className='p-2 min-w-20 text-center bg-secondary'>{i + 1}</th>
                                     ))
                                 }
                             </tr>
@@ -194,27 +194,64 @@ const PrincipalInterestLoan = () => {
                             {categories.map((cat, index) => (
                                 <tr key={index}>
                                     {/* Category & title */}
-                                    <td className='border p-4 sticky left-0 z-30 bg-white w-64'>
+                                    {/* <td className='border p-4 sticky left-0 z-30 bg-white w-64'>
                                         <div>
                                             <span className='text-secondary font-semibold'>{cat.title}</span>
                                             {cat.subtitle?.map((sub, subIndex) => (
                                                 <div key={subIndex} className='py-1'>{sub}</div>
                                             ))}
                                         </div>
+                                    </td> */}
+
+                                    {/* <td className="p-0 sticky left-0 z-30 bg-white">
+                                        <div className="relative px-4 p-4 border-b bg-white">
+
+                                            <div className="absolute left-0 top-0 bottom-0 w-px bg-black" />
+                                            <div className="absolute right-0 top-0 bottom-0 w-px bg-black" />
+
+                                            <span className="text-primary font-bold min-w-40">
+                                                {cat.title}
+                                            </span>
+
+                                            <div className="mt-6 space-y-4">
+                                                {cat.subtitle?.map((sub, subIndex) => (
+                                                    <div key={subIndex} className="py-1 min-w-40">
+                                                        {sub}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </td> */}
+
+                                    <td className='p-0 sticky left-0 z-30 '>
+                                        <div className='relative px-4 p-4 bg-white border-b'>
+                                            <div className='absolute border left-0 top-0 bottom-0 w-px bg-black'></div>
+                                            <div className='absolute border right-0 top-0 bottom-0 w-px bg-black'></div>
+                                            <div className='space-y-4 '>
+                                                <span className='text-secondary font-bold min-w-40'>{cat.title}</span>
+                                                <div className={`space-y-4 ${cat.title === "Acquisition Costs" ? "mt-0" : "mt-6"}`}>
+                                                    {cat.subtitle?.map((sub, subIndex) => (
+                                                        <div key={subIndex} className='py-1 min-w-40'>{sub}</div>
+                                                    ))}
+                                                </div>
+
+                                            </div>
+                                        </div>
+
                                     </td>
 
                                     {/* Present value */}
-                                    <td className='border p-2 w-44'>
+                                    <td className=' px-8 border-b '>
                                         {/* Acquisition cost */}
                                         {cat.title === "Acquisition Costs" && (
-                                            <div>
+                                            <div className=''>
                                                 ${totalAcquisition.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                             </div>
                                         )}
 
                                         <div>
                                             {cat.title === "Capital Growth" && (
-                                                <div className='space-y-2 flex flex-col gap-6 mt-12 items-center justify-center'>
+                                                <div className='space-y-1 flex flex-col gap-6 mt-12 items-center justify-center'>
                                                     <p>${Number(formData.propertyValue).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                                                     <p>${Number(formData.loanAmount).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                                                     <p>${Number(formData.propertyValue) - Number(formData.loanAmount)}</p>
@@ -283,7 +320,7 @@ const PrincipalInterestLoan = () => {
 
 
                                         return (
-                                            <td key={i} className='border w-20 py-2 text-center'>
+                                            <td key={i} className='border w-20  text-center'>
 
                                                 {cat.title === "Key assumptions" && (
                                                     <div className='flex flex-col gap-6 mt-12 items-center justify-center '>

@@ -184,13 +184,16 @@ const InterestLoan = () => {
                 {/* <h1 className='py-8'>Interest only Loan</h1> */}
                 <div className="overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                     <table className='border mt-4 min-w-full'>
-                        <thead className='border'>
+                        <thead className='border relative bg-primary text-white'>
                             <tr>
-                                <th className='sticky left-0 z-30 bg-white w-64 p-4 text-left'>Year</th>
-                                <th className='w-44 p-2 text-left'>Present</th>
+                                {/* <div className="absolute left-0 top-0 bottom-0 w-px bg-black" /> */}
+
+                                <th className='sticky left-0 z-30  p-4 text-left bg-primary '>Year</th>
+                                <th className='w-44 p-2 text-left bg-primary'>Present</th>
+
                                 {
                                     Array.from({ length: loanYears }, (_, i) => (
-                                        <th key={i} className='p-2 min-w-20 text-center'>{i + 1}</th>
+                                        <th key={i} className='p-2 min-w-40 text-center bg-primary'>{i + 1}</th>
                                     ))
                                 }
                             </tr>
@@ -199,28 +202,66 @@ const InterestLoan = () => {
                         <tbody>
                             {categories.map((cat, index) => (
                                 <tr key={index}>
-                                    {/* Category & title */}
-                                    <td className='border border-l border-r p-4 sticky left-0 z-30 ml-1 bg-white w-64'>
+                                    {/* <td className='p-4 sticky bg-white left-0 z-30  border'>
                                         <div>
-                                            <span className='text-primary font-semibold'>{cat.title}</span>
-                                            {cat.subtitle?.map((sub, subIndex) => (
-                                                <div key={subIndex} className='py-1'>{sub}</div>
-                                            ))}
+                                            <span className='text-primary font-bold min-w-40 '>{cat.title}</span>
+                                            <div className='mt-6 space-y-4'>
+                                                {cat.subtitle?.map((sub, subIndex) => (
+                                                    <div key={subIndex} className='py-1 min-w-40'>{sub}</div>
+                                                ))}
+                                            </div>
+
+                                        </div>
+                                    </td> */}
+
+                                    {/* <td className='p-4 sticky left-0 z-30 bg-white border-b ml-1'>
+                                    
+                                        <div className='absolute  left-0 top-0 right-0 h-full w-px bg-black'></div>
+                                        <div className='absolute  top-0 right-0 h-full w-px bg-black'></div>
+
+                                        <div className='relative'>
+                                            <span className='text-primary font-bold min-w-40'>{cat.title}</span>
+                                            <div className='mt-6 space-y-4'>
+                                                {cat.subtitle?.map((sub, subIndex) => (
+                                                    <div key={subIndex} className='py-1 min-w-40'>{sub}</div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </td> */}
+
+                                    <td className="p-0 sticky left-0 z-30 bg-white">
+                                        <div className="relative p-4 border-b bg-white">
+                                            <div className="absolute left-0 top-0 bottom-0 w-px bg-black" />
+                                            <div className="absolute right-0 top-0 bottom-0 w-px bg-black" />
+
+                                            <span className="text-primary font-bold min-w-40">
+                                                {cat.title}
+                                            </span>
+
+                                            <div className="mt-6 space-y-4">
+                                                {cat.subtitle?.map((sub, subIndex) => (
+                                                    <div key={subIndex} className="py-1 min-w-40">
+                                                        {sub}
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
                                     </td>
 
+
+
                                     {/* Present value */}
-                                    <td className='border p-2 w-44'>
+                                    <td className='border-b px-8'>
 
                                         {cat.title === "Acquisition Costs" && (
-                                            <div>
+                                            <div className='-mt-4'>
                                                 <p>${totalAcquisition.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                                             </div>
                                         )}
 
                                         <div>
                                             {cat.title === "Capital Growth" && (
-                                                <div className='space-y-2 flex flex-col gap-6 mt-12 items-center justify-center'>
+                                                <div className='space-y-1 flex flex-col gap-6 mt-12 items-center justify-center'>
                                                     <p>${Number(formData.propertyValue).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                                                     <p>${Number(formData.loanAmount).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                                                     <p>${capitalPresentEquity.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
@@ -231,7 +272,7 @@ const InterestLoan = () => {
 
                                         <div>
                                             {cat.title === "Income" && (
-                                                <div className='space-y-2'>
+                                                <div className='mt-12'>
                                                     <p>${grossRentValue.toLocaleString()}</p>
 
                                                 </div>
@@ -299,7 +340,7 @@ const InterestLoan = () => {
                                             <td key={i} className='border w-20 py-2 text-center'>
 
                                                 {cat.title === "Key assumptions" && (
-                                                    <div className='flex flex-col gap-6 mt-12 items-center justify-center'>
+                                                    <div className='flex flex-col gap-3 mt-12 items-center justify-center'>
 
                                                         <div className="relative w-24">
 
@@ -391,7 +432,7 @@ const InterestLoan = () => {
                                                 )}
 
                                                 {cat.title === "Capital Growth" && (
-                                                    <div className='space-y-2 flex flex-col gap-6 mt-12 items-center justify-center'>
+                                                    <div className='space-y-1 flex flex-col gap-6 mt-12 items-center justify-center'>
                                                         <p>${propertyValueYear.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                                                         <p>${loanAmount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                                                         <p>${equity.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
@@ -401,7 +442,7 @@ const InterestLoan = () => {
                                                 {/* gross rent */}
 
                                                 {cat.title === "Income" && (
-                                                    <div className='space-y-2'>
+                                                    <div className='mt-12'>
                                                         <p>${grossRentYear.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
 
                                                     </div>
@@ -410,17 +451,8 @@ const InterestLoan = () => {
                                                 {/* offset */}
 
                                                 {cat.title === "Cash Deduction" && (
-                                                    <div className='space-y-2 flex flex-col gap-2 mt-12  items-center justify-center'>
-                                                        {/* <p>${grossRentYear.toFixed(2).toLocaleString()}</p> */}
-                                                        {/* <div className='px-4'>
-                                                        <input
-                                                            type="text"
-                                                            className='w-24 border border-blue-300 rounded-lg py-1 text-center'
-                                                            value={`${assumptions.offsetAmount}`}
-                                                            onChange={(e) => handleChange("offsetAmount", e.target.value)}
-                                                            placeholder="OA"
-                                                        />
-                                                    </div> */}
+                                                    <div className='space-y-2 flex flex-col  mt-14  items-center justify-center'>
+
 
                                                         <div className="relative w-24 flex">
 
@@ -451,9 +483,9 @@ const InterestLoan = () => {
                                                             />
                                                         </div>
 
-                                                        <p>${interestedCharge.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                                        <p className='mt-2'>${interestedCharge.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
 
-                                                        <p>${rentalExpensesYear.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                                        <p className='mt-4'>${rentalExpensesYear.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
 
                                                         <p></p>
 
@@ -471,7 +503,7 @@ const InterestLoan = () => {
                                                 )}
 
                                                 {cat.title === "Estimate" && (
-                                                    <div className='px-4 flex flex-col gap-2  mt-8 items-center justify-center'>
+                                                    <div className='px-4 flex flex-col gap-5  mt-14 items-center justify-center'>
 
 
                                                         <p>${estimateEquity.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
@@ -548,13 +580,13 @@ const InterestLoan = () => {
 
                 <div className='mt-12'>
 
-                        <InterestLineChart
-                            years={years}
-                            beforeTax={beforeTax}
-                            afterTax={afterTax}
-                            interest={interestArr}
-                            totalPerformance={totalPerformance}
-                        />
+                    <InterestLineChart
+                        years={years}
+                        beforeTax={beforeTax}
+                        afterTax={afterTax}
+                        interest={interestArr}
+                        totalPerformance={totalPerformance}
+                    />
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
                         <div>

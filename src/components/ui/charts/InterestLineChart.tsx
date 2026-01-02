@@ -94,6 +94,7 @@ export default function InterestLineChart({
                 plugins: {
                     legend: {
                         position: "top",
+                        display: false,
                     },
                     tooltip: {
                         backgroundColor: "rgba(0,0,0,0.85)",
